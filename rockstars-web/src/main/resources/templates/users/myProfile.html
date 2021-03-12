@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+<div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Login</a>
+            <a sec:authorize="isAuthenticated()" class="navbar-brand" href="#" th:href="@{~/users/dashboard}">Users DashBoard</a>
+            <a class="navbar-brand" href="#" th:href="@{/users/myProfile.html}">My Profile </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/creditProfile.html}">Credit Profile </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/inbox.html}">Inbox </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/support.html}">Support </a>
+            <ul class="nav navbar-nav">
+                <li>
+                    <div class="float-right">
+                        <form class="form-inline" method="post" th:action="@{/logout}">
+                            <button sec:authorize="isAuthenticated()" class="btn btn-danger" type="submit">Logout <span class="sr-only">(current)</span></button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="float-right">
+                        <p class="navbar-brand text-success"> Welcome! <span th:text="${#authentication.getName()}"></span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+
+    <h1>User Profiles</h1>
+</div>
+<div class="container d-flex">
+    <table>
+        <tbody>
+        <tr>
+            <th>City</th>
+            <th>Country</th>
+            <th>Postal Code</th>
+            <th>Shipping Address</th>
+            <th>Billing Address</th>
+            <th>Shipping Default</th>
+            <th>Billing Default</th>
+            <th>Date Created</th>
+            <th>UserFK</th>
+        </tr>
+        <tr th:each="profile : ${profiles}"
+        th:if="${profile.userForeignKey.getEmail()}==${#authentication.getName()}">
+            <td th:text="${profile.city}"></td>
+            <td th:text="${profile.country}"></td>
+            <td th:text="${profile.postalCode}"></td>
+            <td th:text="${profile.shippingAddress}"></td>
+            <td th:text="${profile.billingAddress}"></td>
+            <td th:text="${profile.shippingAddressDefault}"></td>
+            <td th:text="${profile.billingAddressDefault}"></td>
+            <td th:text="${profile.dateCreated}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <h2>Add Profile</h2>
+    <div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>MY PROFILES</h1>
+            <form th:action="@{/users/myProfile}" th:object="${profilesForm}" method="post">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>:
+                    <input class="form-control" type="text" id="firstName" name="firstName" th:value="*{firstName}">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>:
+                    <input class="form-control" type="text" id="lastName" name="lastName" th:value="*{lastName}" >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>:
+                    <input class="form-control" type="email" id="email" name="email" th:value="*{email}" >
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>:
+                    <input class="form-control" type="date" id="dob" name="dob" th:value="*{dob}" >
+                </div>
+
+                <div class="form-group">
+                    <label for="shippingAddress">Shipping Address</label>:
+                    <input class="form-control" type="text" id="shippingAddress" name="shippingAddress" th:value="*{shippingAddress}" >
+                </div>
+
+                <div class="form-group">
+                    <label for="billingAddress">Billing Address</label>:
+                    <input class="form-control" type="text" id="billingAddress" name="billingAddress" th:value="*{billingAddress}" >
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>:
+                    <input class="form-control" type="text" id="city" name="city" th:value="*{city}">
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country</label>:
+                    <input class="form-control" type="text" id="country" name="country" th:value="*{country}">
+                </div>
+
+                <div class="form-group">
+                    <label for="postalCode">Postal</label>:
+                    <input class="form-control" type="text" id="postalCode" name="postalCode" th:value="*{postalCode}">
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input class="form-control btn btn-primary" id="submitProfile" name="submitProfile"
+                                   type="submit" value="Submit">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

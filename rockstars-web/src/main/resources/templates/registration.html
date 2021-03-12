@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Registration</title>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Login</a>
+            <a class="navbar-brand" href="#" th:href="@{/registration}">Registration</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully registered
+                    to our awesome app!</div>
+            </div>
+
+            <h1>Registration</h1>
+
+            <form th:action="@{/registration}" th:object="${registrationForm}" method="post">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>:
+                    <input class="form-control" type="text" id="firstName" name="firstName" th:value="*{firstName}" th:errorClass="is-invalid" th:required="required">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>:
+                    <input class="form-control" type="text" id="lastName" name="lastName" th:value="*{lastName}" th:errorClass="is-invalid" th:required="required">
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="address">Address</label>:
+                    <input class="form-control" type="text" id="address" name="address" th:value="*{address}" th:errorClass="is-invalid" th:required="required">
+                    <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>:
+                    <input class="form-control" type="email" id="email" name="email" th:value="*{email}" th:errorClass="is-invalid" th:required="required">
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>:
+                    <input class="form-control" type="password" id="password" name="password" th:value="*{password}" th:errorClass="is-invalid" th:required="required">
+                    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordConfirm">Confirm Password</label>:
+                    <input class="form-control" type="password" id="passwordConfirm" name="passwordConfirm" th:required="required">
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input class="form-control btn btn-primary" id="registerSubmit" name="registerSubmit"
+                                   type="submit" value="Register">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>

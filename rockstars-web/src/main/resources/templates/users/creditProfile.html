@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Tab1</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Login</a>
+            <a sec:authorize="isAuthenticated()" class="navbar-brand" href="#" th:href="@{~/users/dashboard}">Users
+                DashBoard</a>
+            <a class="navbar-brand" href="#" th:href="@{/users/myProfile.html}">My Profile </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/creditProfile.html}">Credit Profile </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/inbox.html}">Inbox </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/support.html}">Support </a>
+            <ul class="nav navbar-nav">
+                <li>
+                    <div class="float-right">
+                        <form class="form-inline" method="post" th:action="@{/logout}">
+                            <button sec:authorize="isAuthenticated()" class="btn btn-danger" type="submit">Logout <span
+                                    class="sr-only">(current)</span></button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="float-right">
+                        <p class="navbar-brand text-success"> Welcome! <span
+                                th:text="${#authentication.getName()}"></span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div>
+            <fieldset>
+                <h1>CREDIT INFORMATION PROFILE</h1>
+                <h3>Add New Card:</h3>
+                <form th:action="@{/creditProfile}" method="post">
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <div>
+                                <legend class="col-form-label col-sm-2 pt-0">Credit Card Type</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="mastercard" name="type"
+                                               value="Mastercard" th:required="required">
+                                        <label class="form-check-label" for="mastercard">Mastercard</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="visa" name="type" value="Visa"
+                                               th:required="required">
+                                        <label class="form-check-label" for="visa">Visa</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="americanExpress" name="type"
+                                               value="American Express" th:required="required">
+                                        <label class="form-check-label" for="americanExpress">American Express</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label for="expiry" class="col-sm-2 col-form-label">Expiration Date</label>
+                            <input class="form-control" type="month" id="expiry" name="expiry" th:required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardHolder" class="col-sm-2 col-form-label">Card Holder Name</label>
+                            <input class="form-control" type="text" id="cardHolder" name="cardHolder"
+                                   th:required="required">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardNumber" class="col-sm-2 col-form-label">Card Number</label>
+                            <input class="form-control" type="password" id="cardNumber" name="cardNumber"
+                                   th:required="required">
+                    </div>
+
+                    <div class="form-group ">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="defaultCreditCard"
+                                       name="defaultCreditCard">
+                                <label class="form-check-label" for="defaultCreditCard"> Save as Default or
+                                    Preferred</label>
+                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <input class="form-control btn btn-primary" id="creditCardSubmit"
+                                       name="creditCardSubmit"
+                                       type="submit" value="Add">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>Reply Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Login</a>
+            <a sec:authorize="isAuthenticated()" class="navbar-brand" href="#" th:href="@{~/users/dashboard}">Users DashBoard</a>
+            <a class="navbar-brand" href="#" th:href="@{/users/myProfile.html}">My Profile </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/creditProfile.html}">Credit Profile </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/inbox.html}">Inbox </a>
+            <a class="navbar-brand" href="#" th:href="@{/users/support.html}">Support </a>
+            <ul class="nav navbar-nav">
+                <li>
+                    <div class="float-right">
+                        <form class="form-inline" method="post" th:action="@{/logout}">
+                            <button sec:authorize="isAuthenticated()" class="btn btn-danger" type="submit">Logout <span class="sr-only">(current)</span></button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="float-right">
+                        <p class="navbar-brand text-success"> Welcome! <span th:text="${#authentication.getName()}"></span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Support Page</h1>
+            <h2>Description</h2>
+            <p th:text="${replyMessage.description}"></p>
+            <form th:action="@{/admin/submitReply}" th:object="${replyMessage}" method="post">
+                <h2>Support Ticket</h2>
+
+                <div class="form-group">
+                    <label for="toWho">To Email</label>:
+                    <input class="form-control" type="email" id="toWho" name="toWho" th:value="*{fromWho}">
+                </div>
+
+                <div class="form-group">
+                    <label for="fromWho">From Email</label>:
+                    <input class="form-control" type="email" id="fromWho" name="fromWho" th:value="*{toWho}">
+                </div>
+
+                <div class="form-group">
+                    <label for="messageSubject">Subject</label>:
+                    <input class="form-control" type="text" id="messageSubject" name="messageSubject" th:value="*{messageSubject}">
+                </div>
+
+                <div>
+                    <label for="description">Description</label>:
+                    <textarea rows = "5" cols = "60"  id="description" name = "description" th:value="*{description}">
+                    </textarea><br>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input class="form-control btn btn-primary" id="submitMessage" name="submitMessage"
+                                   type="submit" value="Send Message">
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

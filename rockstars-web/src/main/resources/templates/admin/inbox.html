@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head>
+    <meta charset="UTF-8">
+    <title>Tab1</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Login</a>
+            <a class="navbar-brand" sec:authorize="hasRole('ROLE_ADMIN')" href="#" th:href="@{~/admin/dashboard}">Admin DashBoard</a>
+            <a class="navbar-brand" href="#" th:href="@{/admin/myProfile.html}">My Profile</a>
+            <a class="navbar-brand" href="#" th:href="@{/admin/userListing.html}">User Listing</a>
+            <a class="navbar-brand" href="#" th:href="@{/admin/inbox.html}">Inbox</a>
+            <a class="navbar-brand" href="#" th:href="@{/admin/support.html}">Support</a>
+            <ul class="nav navbar-nav">
+                <li>
+                    <div class="float-right">
+                        <form class="form-inline" method="post" th:action="@{/logout}">
+                            <button sec:authorize="isAuthenticated()" class="btn btn-danger" type="submit">Logout <span class="sr-only">(current)</span></button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="float-right">
+                        <p class="navbar-brand text-success"> Welcome! <span th:text="${#authentication.getName()}"></span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Admin Inbox</h1>
+        </div>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th>Ticket #</th>
+                <th>Date Added</th>
+                <th>Subject</th>
+                <th>Action Remove</th>
+                <th>Action Reply</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${messages}" th:if="${message.toWho}==${#authentication.getName()}">
+                <td th:text="${message.id}"></td>
+                <td th:text="${message.dateCreated}"></td>
+                <td th:text="${message.messageSubject}"></td>
+                <td><a th:href="@{/admin/remove/{id}(id=${message.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2">Remove</i></a></td>
+                <td><a th:href="@{/admin/reply/{id}(id=${message.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2">Reply</i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<script type="text/javascript"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
